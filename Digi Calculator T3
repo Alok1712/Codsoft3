@@ -1,0 +1,59 @@
+let currentNumber = '';
+let previousNumber = '';
+let operator = '';
+
+function appendNumber(number) {
+  currentNumber += number;
+  updateScreen(currentNumber);
+}
+
+function chooseOperator(selectedOperator) {
+  if (currentNumber === '') return;
+  if (previousNumber !== '') {
+    calculateResult();
+  }
+  operator = selectedOperator;
+  previousNumber = currentNumber;
+  currentNumber = '';
+}
+
+function updateScreen(number) {
+  document.querySelector('.calculator-screen').value = number;
+}
+
+function calculateResult() {
+  let result;
+  const prev = parseFloat(previousNumber);
+  const current = parseFloat(currentNumber);
+
+  if (isNaN(prev) || isNaN(current)) return;
+
+  switch (operator) {
+    case '+':
+      result = prev + current;
+      break;
+    case '-':
+      result = prev - current;
+      break;
+    case '*':
+      result = prev * current;
+      break;
+    case '/':
+      result = prev / current;
+      break;
+    default:
+      return;
+  }
+
+  currentNumber = result;
+  operator = '';
+  previousNumber = '';
+  updateScreen(currentNumber);
+}
+
+function clearScreen() {
+  currentNumber = '';
+  previousNumber = '';
+  operator = '';
+  updateScreen('');
+}
